@@ -2,20 +2,40 @@
 
 ```
 library(tidyverse)
+library(sf)
 
-map <- readRDS("afghanistan_provincial_map.RDS")
+# unzip("input/afghan_province.zip", exdir = "input")
+map <- st_read("input/afghan_province.shp")
+map <- full_join(map, read.csv("input/map_labels.csv"), by = c("prov" = "province"))
+
 
 map %>% 
-  ggplot(aes(x = long, y = lat, group = province)) +
-  geom_polygon(col = "white", show.legend = T, fill = "skyblue") +
-  geom_text(aes(x = position_x, y = position_y, label = province),
-            size = 3) +
+  ggplot() +
+  geom_sf(fill = "skyblue", color = "gray50", show.legend = F, alpha = 0.5) +
+  geom_text(aes(position_x, position_y, label = prov), size = 3) +
   theme_void() +
-  theme(plot.title = element_text(hjust = 0.5, size = 15),
-        legend.position = "bottom") +
-  labs(title = "Afghanistan Provincial Map", fill = NULL)
+  theme(plot.title = element_text(hjust = 0.5, size = 15)) +
+  labs(title = "Afghanistan Provincial Map", fill = NULL) +
+  NULL
 
-ggsave("map.png", height = 8, width = 12)
+ggsave("output/map_1.png", width = 12, height = 8)
 
 ```
-![](map.png)
+![](map_1.png)
+
+
+```
+map %>% 
+  ggplot() +
+  geom_sf(aes(fill = prov), color = "gray50", show.legend = F, alpha = 0.5) +
+  geom_text(aes(position_x, position_y, label = prov), size = 3) +
+  theme_void() +
+  theme(plot.title = element_text(hjust = 0.5, size = 15)) +
+  labs(title = "Afghanistan Provincial Map", fill = NULL) +
+  NULL
+
+ggsave("output/map2.png", width = 12, height = 8)
+
+```
+
+![](map_2.png)
