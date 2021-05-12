@@ -34,7 +34,7 @@ map %>%
   labs(title = "Afghanistan Provincial Map", fill = NULL) +
   NULL
 
-ggsave("output/map2.png", width = 12, height = 8)
+ggsave("output/map_2.png", width = 12, height = 8)
 
 ```
 
