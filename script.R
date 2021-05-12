@@ -1,9 +1,9 @@
 library(tidyverse)
 library(sf)
 
-# unzip("input/afghan_province.zip", exdir = "input")
-map <- st_read("input/afghan_province.shp")
-map <- full_join(map, read.csv("input/map_labels.csv"), by = c("prov" = "province"))
+unzip("afghan_province.zip")
+map <- st_read("afghan_province.shp")
+map <- full_join(map, read.csv("map_labels.csv"), by = c("prov" = "province"))
 
 # simple map
 map %>% 
@@ -15,7 +15,7 @@ map %>%
   labs(title = "Afghanistan Provincial Map", fill = NULL) +
   NULL
 
-ggsave("output/map_1.png", width = 12, height = 8)
+ggsave("map_1.png", width = 12, height = 8)
 
 map %>% 
   ggplot() +
@@ -26,6 +26,4 @@ map %>%
   labs(title = "Afghanistan Provincial Map", fill = NULL) +
   NULL
 
-ggsave("output/map2.png", width = 12, height = 8)
-
-
+ggsave("map2.png", width = 12, height = 8)
